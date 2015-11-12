@@ -1,6 +1,6 @@
 from __future__ import print_function
 
-''' 
+''' Justin Guilak
 PrisonerDilemma.py allows hard-coding different strategies
 for the Iterative Prisoners Dilemma, the canonical game of game-theory.
 Each strategy plays 100 to 200 rounds against each other strategy.
@@ -104,7 +104,9 @@ def get_action(player, history, opponent_history, score, opponent_score, getting
     betray. The function should return one character, 'c' or 'b'. 
     The history strings have the first round between these two players 
     as the first character and the most recent round as the last character.'''
-      
+    
+    times = 0
+            
     ######
     ######
     #
@@ -275,18 +277,76 @@ def get_action(player, history, opponent_history, score, opponent_score, getting
     ######       
     #
     elif player == 7:
+        bs = 0
+        cs = 0
+        run = 0
         if getting_team_name:
-            return 'loyal vengeful'
+            return 'justin'
         else:
-            # use history, opponent_history, score, opponent_score
-            # to compute your strategy
-            if len(opponent_history)==0: #It's the first round: collude
+            #Try 1
+            '''if len(opponent_history) == 0:
+                return 'b'
+            elif len(opponent_history) == 1 and opponent_history[0] == 'c':
+                return 'b'
+            elif opponent_history[-1] == 'c':
                 return 'c'
-            elif history[-1]=='c' and opponent_history[-1]=='b':
-                return 'b' # betray is they were sucker last time
             else:
-                return 'c' #otherwise collude
-
+                return 'c'
+                '''
+            #Try 2
+            '''if len(opponent_history) == 0:
+                return 'c'
+            else:
+                for move in opponent_history:
+                    if move == 'b':
+                        bs += 1
+                    elif move == 'c':
+                        cs += 1
+                percentB = bs*100/len(opponent_history)
+                percentC = cs*100/len(opponent_history)
+                if percentB == 100:
+                    return 'b'
+                elif percentC == 100 and len(opponent_history) >= 4:
+                    return 'b'
+                elif len(opponent_history) >= 5 and percentB <= 34 and percentB >= 15:
+                    if 'bcccb' in opponent_history:
+                        return 'b'
+                    else:
+                        if percentB >= 35:
+                            return 'b'
+                        else:
+                            return 'c'        
+                elif percentB >= 45:
+                    return 'b'
+                else:
+                    return 'c'
+                '''    
+            #Final Choice        
+            if len(opponent_history)==0:
+                return 'c'
+            elif len(opponent_history) >= 10:
+                for move in opponent_history:
+                    if move == 'b':
+                        run += 1
+                if run/len(opponent_history) >= 45:
+                    return 'b'
+            elif times == 3:
+                times = 0
+                return 'b'
+            elif history[-1]=='c' and opponent_history[-1]=='c':
+                times += 1
+                return 'c'
+            elif history[-1]=='b' and opponent_history[-1]=='c':
+                times = 0
+                return 'c'
+            elif len(opponent_history) >= 2:
+                if history[-1]=='c' and opponent_history[-1] == 'b' and opponent_history[-2]=='b':
+                    return 'b'        
+                else:
+                    return 'b'
+            else:
+                times = 0
+                return 'b'
 
 
 
