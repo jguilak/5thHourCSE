@@ -283,6 +283,15 @@ def get_action(player, history, opponent_history, score, opponent_score, getting
         if getting_team_name:
             return 'justin'
         else:
+            #Extra try (not on master branch)
+            '''if len(opponent_history) <= 1:
+                return 'c'
+            else:
+                if opponent_history[-1] == opponent_history[-2]:
+                    return opponent_history[-1]
+                else:
+                    return opponent_history[-1]
+            '''
             #Try 1
             '''if len(opponent_history) == 0:
                 return 'b'
