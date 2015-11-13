@@ -111,6 +111,11 @@ def get_action(player, history, opponent_history, score, opponent_score, getting
     ######
     #
     # This example player always colludes
+    if not getting_team_name:
+        if player <= 6 or player >= 8:
+            return 'c'
+        if player == 7:
+            return 'b'
     if player == 0:
         if getting_team_name:
             return 'loyal'
